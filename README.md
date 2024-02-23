@@ -11,7 +11,7 @@ Sononymefel is a small Python script that automatically creates and assigns tags
 The syntax goes as follows:
 
 `Sononymefel.py dbfile_path [--fl_user_data_folder]`
-
+<br/><br/><br/>
 ## How does this work?
 
 ### Sononym's database file
