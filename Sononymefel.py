@@ -28,7 +28,7 @@ parser.add_argument('dbfile_path', metavar='dbfile_path', type=str, help='The pa
 parser.add_argument('--fl_user_data_folder', metavar='', type=str, default=os.path.join(os.path.expanduser('~/Documents/Image-Line')),
                     help='The FL Studio User Data folder\'s location. If you have not changed it, it is located in Documents\\Image-Line. This default location will be used if this argument is not provided.')
 parser.add_argument('--sample_library_folder', metavar='', type=str, default=None,
-                    help='The root folder of your sample library. The location of the Synonym database file will be used if this argument is not provided.')
+                    help='The root folder of your sample library. The location of the Sononym database file will be used if this argument is not provided.')
 
 args = parser.parse_args()
 
