@@ -37,7 +37,7 @@ if args.sample_library_folder is None:
     args.sample_library_folder = os.path.dirname(args.dbfile_path)
 
 def get_user_confirmation():
-    print(bcolors.WARNING + "WARNING: This operation will overwrite your existing tags.\nIt is strongly recommended make a backup of the Tags file if you have existing tags in case something goes wrong!\n" + bcolors.ENDC)
+    print(bcolors.WARNING + "WARNING: This operation will overwrite your existing tags.\nIt is strongly recommended to make a backup of the Tags file if you have existing tags in case something goes wrong!\n" + bcolors.ENDC)
     while True:
         user_input = input("Are you sure you want to proceed? [y/n]: ").lower()
         if user_input in ['y', 'yes']:
