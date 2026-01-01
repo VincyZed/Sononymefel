@@ -17,10 +17,10 @@ The syntax goes as follows:
 ### Sononym's database file
 Upon scanning a sample library and automatically tagging the audio files using machine learning, Sononym creates a database file called **sononym.db**, normally located at the root of the imported sample library folder.
 
-Fortunately this database is not encrypted, so we can easily read and extract its contents. For the purposes of this script, we simply need the **filename** and **categories_VS** clumns.
+Fortunately this database is not encrypted, so we can easily read and extract its contents. For the purposes of this script, we simply need the **filename** and **categories_VS** columns.
 
 ### FL Studio's "Tags" File
-To store the list of tags and to remember which tag(s) are associated with each sample, FL Studio creates a file called **Tags** in the following location:
+To store the list of tags and to remember which tag(s) are associated with each sample, once at least one tag is assigned to a sample, FL Studio creates a file called **Tags** in the following location:
 
 `USER_DATA_FOLDER/FL Studio/Settings/Browser/`.
 
