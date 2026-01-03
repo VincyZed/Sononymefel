@@ -2,6 +2,7 @@
 Sononymefel is a small Python script that automatically creates and assigns tags to your sample library in the FL Studio browser using Sononym's local database file.
 
 ## Requirements
+- Windows (paths are different on macOS)
 - [Python](https://www.python.org/downloads/)
 - An existing [Sononym](https://www.sononym.net/) library
 - [FL Studio](https://www.image-line.com/)
