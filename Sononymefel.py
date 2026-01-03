@@ -1,19 +1,16 @@
 import argparse
 import os
-import sqlite3
-import ast
-import re
+import duckdb
 
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
+bcolors = {
+    "BLUE": "\033[94m",
+    "GREEN": "\033[92m",
+    "WARN": "\033[93m",
+    "FAIL": "\033[91m",
+    "END": "\033[0m",
+    "UNDER": "\033[4m"
+}
 
 
 def clear_screen():
@@ -71,7 +68,7 @@ print(bcolors.UNDERLINE + "FL Studio User Data folder location:" + bcolors.ENDC 
 
 
 if (get_user_confirmation()):
-    con = sqlite3.connect(args.dbfile_path)
+    con = duckdb.connect(args.dbfile_path, read_only=True)
 
     table_name = 'assets'
 
@@ -90,8 +87,8 @@ if (get_user_confirmation()):
     tags = cur.fetchall()
 
     # Flatten the list since columns contain arrays
-    flat_list = flatten([ast.literal_eval(tag[0]) for tag in tags if tag[0]])
-
+    flat_list = flatten([tag[0] for tag in tags if tag[0]])
+    
     # Get unique values
     tag_list = set(flat_list)
 
@@ -118,32 +115,24 @@ if (get_user_confirmation()):
 
     tags_file.write(tags_row + "\n")
 
-    for row in rows:
-        # Trim the beginning and end
-        row = str(row)[2:-3]
-        for key, value in words_to_eliminate.items():
-            row = row.replace(key, value)
-        
-        row = row.replace("/","\\")
+    for path, tags in rows:
+        if not tags:
+            continue
 
-        
-        if "', '[" in row:
-            tags = row.split("', '[", 1)[1]
-            path = row.split("', '[", 1)[0]
-        if  "\", '[" in row:
-            tags = row.split("\", '[", 1)[1]
-            path = row.split("\", '[", 1)[0]
+        # Normalize tags
+        cleaned_tags = []		
+        for tag in tags:
+            for key, value in words_to_eliminate.items():
+                tag = tag.replace(key, value)
+            cleaned_tags.append(tag.lower())
 
-        # Remove double-quotes from tags and make them lowercase
-        tags = new_s = re.sub(r'\"(\w+)\"', r'\1', tags).lower()
-
-        # Format and write the row to the tags file
         folder = args.sample_library_folder.lower()
         if not folder.endswith("\\"):
             folder += "\\"
 
-        row = "\"" + folder + path + '\",' + tags + "\n"
-        tags_file.write(row)
+        full_path = folder + path.replace("/", "\\")
+        tags_line = '"' + full_path + '",' + ",".join(cleaned_tags) + "\n"
+        tags_file.write(tags_line)
 
 
     tags_file.close()
